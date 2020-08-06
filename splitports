@@ -1,0 +1,11 @@
+#!/bin/bash
+## Strip the oprn port numbers from an NMAP scan into a comma delimited list for use in another scan
+INFILE=$1
+
+if [[ -z $INFILE ]] || [[ $INFILE == '-h' ]] || [[ $INFILE == '--help' ]]; then
+echo "USAGE:"
+echo ""
+echo "splitports <NMAP FORMAT OUTPUT>"
+exit
+fi
+cat $INFILE | grep "open  " | cut -d '/' -f 1 | sed -z 's/\n/,/g' | sed 's/,$/\n/g'
