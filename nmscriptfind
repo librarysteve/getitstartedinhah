@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# search for nmap NSE scripts via keyword
+# I GUESS "LOCATE" DOES THE SAME THING...
+# Works with the default kali NSE script location
+
+term=$1
+if [[ -z $term ]]; then
+ locate *.nse
+ exit
+fi
+
+ls /usr/share/nmap/scripts/ | grep $term
+exit
