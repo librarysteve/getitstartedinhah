@@ -1,0 +1,10 @@
+#!/bin/bash
+# Save your self .3 seconds and use one command 
+# instead of having to type:
+# nmap --script-help ldap-search
+#
+# You can just type:
+# nsehelp ldap-search
+# Save precious time and keystrokes and use that time to remember how dumb this script is and how this description is longer than the actual command.......
+
+nmap --script-help=$1
