@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# BECAUSE TYPING COMMANDS IS FOR SQUARES.
+
+if [[ $EUID -ne 0 ]]; then
+   echo "GOT ROOT?" 1>&2
+   exit 1
+fi
+
+update-alternatives --config python
