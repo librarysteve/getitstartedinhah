@@ -1,0 +1,29 @@
+#!/bin/bash
+## A script to extract the open ports from an nmap scan to a CSV file or print to the terminal
+INFILE=$1
+OUTFILE=$2
+HEADERS="PORT,STATUS,SERVICE,RESPONSE"
+SELF=$(echo $0 | rev | cut -d '/' -f 1 | rev)
+
+if [[ -z $INFILE || $INFILE == '-h' || $INFILE == '--help' ]]; then
+echo "USAGE:"
+echo "${SELF} <SCAN FILE TO PROCESS>  <OUTPUT FILE LOCATION(optional)>"
+exit
+fi
+
+NO_HEADERS=$(cat $INFILE | grep open | sed -z 's/  */,/g')
+
+if [[ -n $OUTFILE ]]; then
+echo $HEADERS >> $OUTFILE
+echo $NO_HEADERS | sed -e 's/ /\n/g' >> $OUTFILE
+exit
+else
+echo "NO OUTFILE SUPPLIED!"
+echo "PRINTING TO SDTOUT!"
+echo "POTATO"
+echo ""
+echo ""
+sleep 1
+echo $HEADERS
+echo $NO_HEADERS | sed -e 's/ /\n/g'
+fi
