@@ -88,7 +88,7 @@ try:
     domain = sys.argv[2]
     form_num = sys.argv[3]
 
-    if form_num == '3':
+    if form_num == '1':
         for line in infile:
             name = line.split()
             a = first_dot_last(name, domain)
@@ -101,7 +101,7 @@ try:
             a = first_last(name, domain)
             print(a)
 
-    if form_num == '1':
+    if form_num == '3':
         for line in infile:
             name = line.split()
             a = f_dot_last(name, domain)
