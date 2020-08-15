@@ -1,0 +1,121 @@
+#!/usr/bin/env python
+]
+#
+#   Emailerator is a stupid script to take a list of
+#   users first and last names and generate possible addresses
+#   based on standard corperate email formats.
+#
+
+import sys
+import os
+from time import sleep
+def  banner_message():
+    print('''
+                                                   __
+                                                  | _]
+                                               .--||-----.
+                                               |  ||     |
+                                          _____|__||_____|
+                                                    \ |
+                                          _______    ||
+                                         |==   []|   ||
+                                         |  ==== |   ||
+                                         '-------'   ||
+                                                     ||
+                ,.   (   .      )        .      " (   .      )        .      "
+               ("     )  )'     ,'        )  . (`  )  )'     ,'        )  . (`     '`
+             .; )  ' (( (" )    ;(,     ((  (  ;) (( (" )    ;(,     ((  (  ;)  "  )"
+             _"., ,._'_.,)_(..,( . )_  _' )_') (._'_.,)_(..,( . )_  _' )_') (. _..( '..
+@@@@@@@@  @@@@@@@@@@    @@@@@@   @@@  @@@       @@@@@@@@  @@@@@@@    @@@@@@   @@@@@@@   @@@@@@   @@@@@@@                                                                             
+@@@@@@@@  @@@@@@@@@@@  @@@@@@@@  @@@  @@@       @@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@  @@@@@@@@  @@@@@@@@                                                                            
+@@!       @@! @@! @@!  @@!  @@@  @@!  @@!       @@!       @@!  @@@  @@!  @@@    @@!    @@!  @@@  @@!  @@@                                                                            
+!@!       !@! !@! !@!  !@!  @!@  !@!  !@!       !@!       !@!  @!@  !@!  @!@    !@!    !@!  @!@  !@!  @!@                                                                            
+@!!!:!    @!! !!@ @!@  @!@!@!@!  !!@  @!!       @!!!:!    @!@!!@!   @!@!@!@!    @!!    @!@  !@!  @!@!!@!                                                                             
+!!!!!:    !@!   ! !@!  !!!@!!!!  !!!  !!!       !!!!!:    !!@!@!    !!!@!!!!    !!!    !@!  !!!  !!@!@!                                                                              
+!!:       !!:     !!:  !!:  !!!  !!:  !!:       !!:       !!: :!!   !!:  !!!    !!:    !!:  !!!  !!: :!!                                                                             
+:!:       :!:     :!:  :!:  !:!  :!:   :!:      :!:       :!:  !:!  :!:  !:!    :!:    :!:  !:!  :!:  !:!                                                                            
+ :: ::::  :::     ::   ::   :::   ::   :: ::::   :: ::::  ::   :::  ::   :::     ::    ::::: ::  ::   :::                                                                            
+: :: ::    :      :     :   : :  :    : :: : :  : :: ::    :   : :   :   : :     :      : :  :    :   : :''')
+
+def help_message():
+    print('''
+    Usage:
+
+    emailerator [input file(one name/row)] [domain(no @)] [format number]
+    --------------------------------------------------------------
+    input file          File of first and last names, one user per line.
+
+    domain              the domain you want to generate emails for
+    
+    format              3 possible formats:
+                        format 0 --> generate all
+                        format 1 --> firstname.lastname
+                        format 2 --> firstnamelastname
+                        format 3 --> f.lastname
+    
+    
+    **All Required in this order**
+    ''')
+
+def first_dot_last(fullname, domain):
+    f_name = fullname[0]
+    l_name = fullname[1]
+    processed = "{}.{}@{}".format(f_name, l_name, domain)
+    return processed
+
+def first_last(fullname, domain):
+    f_name = fullname[0]
+    l_name = fullname[1]
+    processed = "{}{}@{}".format(f_name, l_name, domain)
+    return processed
+
+def f_dot_last(fullname, domain):
+    f_ = fullname[0][0]
+    l_name = fullname[1]
+    processed = "{}.{}@{}".format(f_, l_name, domain)
+    return processed
+
+
+def process_all(fullname, domain):
+    a = first_dot_last(fullname, domain)
+    b = first_last(fullname, domain)
+    c = f_dot_last(fullname, domain)
+    all_formats = "{}\n{}\n{}".format(a, b, c)
+    return all_formats
+
+try:
+    infile = open(sys.argv[1], 'r')
+    domain = sys.argv[2]
+    form_num = sys.argv[3]
+
+    if form_num == '3':
+        for line in infile:
+            name = line.split()
+            a = first_dot_last(name, domain)
+            print(a)
+    
+
+    if form_num == '2':
+        for line in infile:
+            name = line.split()
+            a = first_last(name, domain)
+            print(a)
+
+    if form_num == '1':
+        for line in infile:
+            name = line.split()
+            a = f_dot_last(name, domain)
+            print(a)
+
+    if form_num == '0':
+        for line in infile:
+            name = line.split()
+            a = process_all(name, domain)
+            print(a)
+    
+
+except IndexError:
+    banner_message()
+    sleep(1)
+    help_message()
+    raise SystemExit()
